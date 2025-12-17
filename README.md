@@ -1,6 +1,6 @@
 # react-pdf-viewer-plus
 
-A modern, extensible React PDF viewer and annotator built on top of PDF.js, designed for enterprise-grade document reading and annotation scenarios.
+A lightweight, extensible React PDF viewer and annotator built on top of PDF.js, designed for enterprise-grade document reading and annotation scenarios.
 
 [![NPM](https://img.shields.io/npm/v/react-pdf-viewer-plus.svg)](https://www.npmjs.com/package/react-pdf-viewer-plus)
 [![License](https://img.shields.io/npm/l/react-pdf-viewer-plus)](./LICENSE)
@@ -12,6 +12,7 @@ A modern, extensible React PDF viewer and annotator built on top of PDF.js, desi
   - Highlight, drawing, shapes, text notes
   - Signatures (draw / enter / upload)
   - Stamps with editor support
+  - Edit native PDF annotations directly
 - 🎨 Theme system based on Radix UI Themes
 - 🌍 Internationalization (zh-CN, en-US)
 - 🧩 Highly customizable UI
@@ -79,7 +80,7 @@ export default function App() {
 
 ## 📄 PdfViewer
 
-A lightweight PDF viewer with zoom, sidebar, and extensible UI slots.
+A lightweight PDF viewer with toolbar, sidebar, actions and extensible UI slots.
 
 ### Props
 
@@ -334,4 +335,4 @@ import qiantubifengshouxietiFont from './fonts/qiantubifengshouxieti.ttf';
 
 # 📄 License
 
-Apache-2.0
+MIT

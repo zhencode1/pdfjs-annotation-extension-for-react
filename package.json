@@ -10,7 +10,7 @@
         "pdfjs"
     ],
     "author": "Laomai<codefee@foxmail.com>",
-    "license": "Apache-2.0",
+    "license": "MIT",
     "repository": {
         "type": "git",
         "url": "https://github.com/Laomai-codefee/react-pdf-viewer-plus.git"
