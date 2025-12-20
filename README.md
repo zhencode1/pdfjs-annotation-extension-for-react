@@ -1,18 +1,26 @@
-# pdfjs-annotation-extension-for-react
+<div>
+    <h1 align="center"><code>pdfjs-annotation-extension-for-react</code> ⚡️ </h1>
+    <p align="center">
+        <strong>A lightweight, extensible React PDF annotator and viewer built on top of PDF.js</strong><br/> Supporting the editing of existing PDF file annotations, posting comments, replying, submitting annotation data, and loading for further editing.
+    </p>
+</div>
 
-A lightweight, extensible React PDF viewer and annotator built on top of PDF.js, designed for enterprise-grade document reading and annotation scenarios.
+---
 
 [![NPM](https://img.shields.io/npm/v/pdfjs-annotation-extension-for-react.svg)](https://www.npmjs.com/package/pdfjs-annotation-extension-for-react)
 [![License](https://img.shields.io/npm/l/pdfjs-annotation-extension-for-react)](./LICENSE)
 
-## ✨ Features
+## Online Demo
 
-- 📄 High-fidelity PDF rendering based on PDF.js
+[![Demo](https://img.shields.io/badge/🔥_Live_Demo-React_PDF_Viewer_Plus-FF6F61?style=for-the-badge&logo=github&logoColor=white)](https://laomai-codefee.github.io/pdfjs-annotation-extension-for-react-demo/)
+
+## ✨ Features
 - ✍️ Rich annotation system
   - Highlight, drawing, shapes, text notes
   - Signatures (draw / enter / upload)
   - Stamps with editor support
   - Edit native PDF annotations directly
+- 📄 High-fidelity PDF rendering based on PDF.js
 - 🎨 Theme system based on Radix UI Themes
 - 🌍 Internationalization (zh-CN, en-US)
 - 🧩 Highly customizable UI
@@ -25,9 +33,33 @@ A lightweight, extensible React PDF viewer and annotator built on top of PDF.js,
 - 🧠 Designed for extensibility
   - Clean context & extension architecture
 
-## Online Demo
+## ✍️ Annotation Tools
+1. Rectangle
+2. Circle
+3. Free Hand (grouped if drawn within a short time)
+4. Free Highlight (with auto-correction)
+5. Arrow
+6. Cloud
+7. FreeText 
+8. Signature
+9. Stamp (upload custom images)
+10. Text Highlight
+11. Text Strikeout
+12. Text Underline
+13. Text
 
-[![Demo](https://img.shields.io/badge/🔥_Live_Demo-React_PDF_Viewer_Plus-FF6F61?style=for-the-badge&logo=github&logoColor=white)](https://laomai-codefee.github.io/pdfjs-annotation-extension-for-react-demo/)
+## ✍️ Editing existing annotations in PDF files
+1. Square
+2. Circle
+3. Ink
+4. FreeText
+5. Line
+6. Polygon
+7. PolyLine
+8. Text
+9. Highlight
+10. Underline
+11. StrikeOut
 
 ## 📦 Installation
 
@@ -39,25 +71,7 @@ yarn add pdfjs-annotation-extension-for-react
 
 # 🚀 Quick Start
 
-## Basic PDF Viewer
-
-```jsx
-import { PdfViewer } from 'pdfjs-annotation-extension-for-react'
-import 'pdfjs-annotation-extension-for-react/style'
-
-export default function App() {
-  return (
-    <PdfViewer
-      title="PDF Viewer"
-      url="https://example.com/sample.pdf"
-      layoutStyle={{ width: '100vw', height: '100vh' }}
-    />
-  )
-}
-```
-
-## PDF Annotator
-
+## 1. PDF Annotator
 ```jsx
 import { PdfAnnotator } from 'pdfjs-annotation-extension-for-react'
 import 'pdfjs-annotation-extension-for-react/style'
@@ -76,14 +90,167 @@ export default function App() {
 }
 ```
 
+## 2. Basic PDF Viewer
+
+```jsx
+import { PdfViewer } from 'pdfjs-annotation-extension-for-react'
+import 'pdfjs-annotation-extension-for-react/style'
+
+export default function App() {
+  return (
+    <PdfViewer
+      title="PDF Viewer"
+      url="https://example.com/sample.pdf"
+      layoutStyle={{ width: '100vw', height: '100vh' }}
+    />
+  )
+}
+```
+
+
 # 🧩 Components
+## ✍️ PdfAnnotator
+
+An advanced PDF viewer with annotation capabilities.
+
+### Props
+
+| Prop                      | Type                            | Default                           | Description                 |
+| ------------------------- | ------------------------------- | --------------------------------- | --------------------------- |
+| `user`                    | `{ id: string; name: string }`  | `{ id: 'null', name: 'unknown' }` | Annotation author           |
+| `enableNativeAnnotations` | `boolean`                       | `false`                           | Load native PDF annotations |
+| `initialAnnotations`      | `IAnnotationStore[]`            | `[]`                              | Existing annotations        |
+| `defaultOptions`          | `DeepPartial`                   | -                                 | Default annotator options   |
+| `onSave`                  | `(annotations) => void`         | -                                 | Save callback               |
+| `onLoad`                  | `() => void`                    | -                                 | Load complete               |
+| `onAnnotationAdded`       | `(annotation) => void`          | -                                 | Add callback                |
+| `onAnnotationDeleted`     | `(id) => void`                  | -                                 | Delete callback             |
+| `onAnnotationUpdated`     | `(annotation) => void`          | -                                 | Update callback             |
+| `onAnnotationSelected`    | `(annotation, isClick) => void` | -                                 | Select callback             |
+| `actions`                 | `ReactNode | Component`         | -                                 | Custom action buttons       |
+
+### ⚙️ defaultOptions (Enterprise Design)
+
+#### ✅ DeepPartial + Deep Merge
+
+`defaultOptions` is not a full config override.
+
+- It is defined as `DeepPartial<PdfAnnotatorOptions> `
+- It will be deep merged with the system default configuration
+
+This ensures:
+
+- You only override what you need
+- System defaults remain stable
+- Safe for long-term enterprise use
+
+#### Example
+
+```tsx
+import qiantubifengshouxietiFont from './fonts/qiantubifengshouxieti.ttf';
+
+<PdfAnnotator
+    url="sample.pdf"
+    defaultOptions={{
+        colors: ['#000', '#1677ff'],
+        signature: {
+            colors: ['#000000', '#ff0000', '#1677ff'],
+            type: 'Upload',
+            maxSize: 1024 * 1024 * 5,
+            accept: '.png,.jpg,.jpeg,.bmp',
+            defaultSignature: ['data:image/png;base64,...'],
+            defaultFont: [
+                {
+                    label: '楷体',
+                    value: 'STKaiti',
+                    external: false
+                },
+                {
+                    label: '千图笔锋手写体',
+                    value: 'qiantubifengshouxieti',
+                    external: true,
+                    url: qiantubifengshouxietiFont
+                },
+                {
+                    label: '平方长安体',
+                    value: 'PingFangChangAnTi-2',
+                    external: true,
+                    url: 'http://server/PingFangChangAnTi-2.ttf'
+                }
+            ]
+        },
+        stamp: {
+            maxSize: 1024 * 1024 * 5,
+            accept: '.png,.jpg,.jpeg,.bmp',
+            defaultStamp: ['data:image/png;base64,...'],
+            editor: {
+                defaultBackgroundColor: '#2f9e44',
+                defaultBorderColor: '#2b8a3e',
+                defaultBorderStyle: 'none',
+                defaultTextColor: '#fff',
+                defaultFont: [
+                    {
+                        label: '楷体',
+                        value: 'STKaiti'
+                    }
+                ]
+            }
+        }
+    }}
+/>
+```
+
+### 🎨 Custom UI
+
+#### Custom Actions
+
+```jsx
+<PdfAnnotator
+  url={pdfUrl}
+  actions={({ save, exportToPdf, exportToExcel }) => (
+    <>
+      <button onClick={save}>Save</button>
+      <button onClick={() => exportToPdf('annotations')}>
+        Export PDF
+      </button>
+      <button onClick={() => exportToExcel('annotations')}>
+        Export Excel
+      </button>
+    </>
+  )}
+/>
+```
+
+### 🖋 Signature & Stamp Configuration
+
+```jsx
+<PdfAnnotator
+  url={pdfUrl}
+  defaultOptions={{
+    signature: {
+      defaultSignature: ['data:image/png;base64,...'],
+      defaultFont: [
+        {
+          label: 'Custom Font',
+          value: 'MyFont',
+          external: true,
+          url: '/fonts/myfont.ttf'
+        }
+      ]
+    },
+    stamp: {
+      defaultStamp: ['data:image/png;base64,...']
+    }
+  }}
+/>
+```
+
 
 ## 📄 PdfViewer
 
 A lightweight PDF viewer with toolbar, sidebar, actions and extensible UI slots.
 
 ### Props
-
 
 | Prop                 | Type                             | Default                               | Description             |
 | -------------------- | -------------------------------- | ------------------------------------- | ----------------------- |
@@ -190,141 +357,6 @@ A lightweight PDF viewer with toolbar, sidebar, actions and extensible UI slots.
 
 ---
 
-## ✍️ PdfAnnotator
-
-An advanced PDF viewer with annotation capabilities.
-
-### Props
-
-
-| Prop                      | Type                            | Default                           | Description                 |
-| ------------------------- | ------------------------------- | --------------------------------- | --------------------------- |
-| `user`                    | `{ id: string; name: string }`  | `{ id: 'null', name: 'unknown' }` | Annotation author           |
-| `enableNativeAnnotations` | `boolean`                       | `false`                           | Load native PDF annotations |
-| `initialAnnotations`      | `IAnnotationStore[]`            | `[]`                              | Existing annotations        |
-| `defaultOptions`          | `DeepPartial`                   | -                                 | Default annotator options   |
-| `onSave`                  | `(annotations) => void`         | -                                 | Save callback               |
-| `onLoad`                  | `() => void`                    | -                                 | Load complete               |
-| `onAnnotationAdded`       | `(annotation) => void`          | -                                 | Add callback                |
-| `onAnnotationDeleted`     | `(id) => void`                  | -                                 | Delete callback             |
-| `onAnnotationUpdated`     | `(annotation) => void`          | -                                 | Update callback             |
-| `onAnnotationSelected`    | `(annotation, isClick) => void` | -                                 | Select callback             |
-| `actions`                 | `ReactNode | Component`         | -                                 | Custom action buttons       |
-
-### ⚙️ defaultOptions (Enterprise Design)
-
-#### ✅ DeepPartial + Deep Merge
-
-`defaultOptions` is not a full config override.
-
-- It is defined as `DeepPartial<PdfAnnotatorOptions> `
-- It will be deep merged with the system default configuration
-
-This ensures:
-
-- You only override what you need
-- System defaults remain stable
-- Safe for long-term enterprise use
-
-#### Example
-```tsx
-import qiantubifengshouxietiFont from './fonts/qiantubifengshouxieti.ttf';
-
-<PdfAnnotator
-    url="sample.pdf"
-    defaultOptions={{
-        colors: ['#000', '#1677ff'],
-        signature: {
-            colors: ['#000000', '#ff0000', '#1677ff'],
-            type: 'Upload',
-            maxSize: 1024 * 1024 * 5,
-            accept: '.png,.jpg,.jpeg,.bmp',
-            defaultSignature: ['data:image/png;base64,...'],
-            defaultFont: [
-                {
-                    label: '楷体',
-                    value: 'STKaiti',
-                    external: false
-                },
-                {
-                    label: '千图笔锋手写体',
-                    value: 'qiantubifengshouxieti',
-                    external: true,
-                    url: qiantubifengshouxietiFont
-                },
-                {
-                    label: '平方长安体',
-                    value: 'PingFangChangAnTi-2',
-                    external: true,
-                    url: 'http://server/PingFangChangAnTi-2.ttf'
-                }
-            ]
-        },
-        stamp: {
-            maxSize: 1024 * 1024 * 5,
-            accept: '.png,.jpg,.jpeg,.bmp',
-            defaultStamp: ['data:image/png;base64,...'],
-            editor: {
-                defaultBackgroundColor: '#2f9e44',
-                defaultBorderColor: '#2b8a3e',
-                defaultBorderStyle: 'none',
-                defaultTextColor: '#fff',
-                defaultFont: [
-                    {
-                        label: '楷体',
-                        value: 'STKaiti'
-                    }
-                ]
-            }
-        }
-    }}
-/>
-```
-
-### 🎨 Custom UI
-
-#### Custom Actions
-
-```jsx
-<PdfAnnotator
-  url={pdfUrl}
-  actions={({ save, exportToPdf, exportToExcel }) => (
-    <>
-      <button onClick={save}>Save</button>
-      <button onClick={() => exportToPdf('annotations')}>
-        Export PDF
-      </button>
-      <button onClick={() => exportToExcel('annotations')}>
-        Export Excel
-      </button>
-    </>
-  )}
-/>
-```
-
-### 🖋 Signature & Stamp Configuration
-
-```jsx
-<PdfAnnotator
-  url={pdfUrl}
-  defaultOptions={{
-    signature: {
-      defaultSignature: ['data:image/png;base64,...'],
-      defaultFont: [
-        {
-          label: 'Custom Font',
-          value: 'MyFont',
-          external: true,
-          url: '/fonts/myfont.ttf'
-        }
-      ]
-    },
-    stamp: {
-      defaultStamp: ['data:image/png;base64,...']
-    }
-  }}
-/>
-```
 
 # 🌍 Browser Support
 
@@ -336,3 +368,4 @@ import qiantubifengshouxietiFont from './fonts/qiantubifengshouxieti.ttf';
 # 📄 License
 
 MIT
+
