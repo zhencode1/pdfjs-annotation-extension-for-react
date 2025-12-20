@@ -1,9 +1,9 @@
-# react-pdf-viewer-plus
+# pdfjs-annotation-extension-for-react
 
 A lightweight, extensible React PDF viewer and annotator built on top of PDF.js, designed for enterprise-grade document reading and annotation scenarios.
 
-[![NPM](https://img.shields.io/npm/v/react-pdf-viewer-plus.svg)](https://www.npmjs.com/package/react-pdf-viewer-plus)
-[![License](https://img.shields.io/npm/l/react-pdf-viewer-plus)](./LICENSE)
+[![NPM](https://img.shields.io/npm/v/pdfjs-annotation-extension-for-react.svg)](https://www.npmjs.com/package/pdfjs-annotation-extension-for-react)
+[![License](https://img.shields.io/npm/l/pdfjs-annotation-extension-for-react)](./LICENSE)
 
 ## ✨ Features
 
@@ -27,14 +27,14 @@ A lightweight, extensible React PDF viewer and annotator built on top of PDF.js,
 
 ## Online Demo
 
-[![Demo](https://img.shields.io/badge/🔥_Live_Demo-React_PDF_Viewer_Plus-FF6F61?style=for-the-badge&logo=github&logoColor=white)](https://laomai-codefee.github.io/react-pdf-viewer-plus-demo/)
+[![Demo](https://img.shields.io/badge/🔥_Live_Demo-React_PDF_Viewer_Plus-FF6F61?style=for-the-badge&logo=github&logoColor=white)](https://laomai-codefee.github.io/pdfjs-annotation-extension-for-react-demo/)
 
 ## 📦 Installation
 
 ```bash
-npm install react-pdf-viewer-plus
+npm install pdfjs-annotation-extension-for-react
 or
-yarn add react-pdf-viewer-plus
+yarn add pdfjs-annotation-extension-for-react
 ```
 
 # 🚀 Quick Start
@@ -42,8 +42,8 @@ yarn add react-pdf-viewer-plus
 ## Basic PDF Viewer
 
 ```jsx
-import { PdfViewer } from 'react-pdf-viewer-plus'
-import 'react-pdf-viewer-plus/style'
+import { PdfViewer } from 'pdfjs-annotation-extension-for-react'
+import 'pdfjs-annotation-extension-for-react/style'
 
 export default function App() {
   return (
@@ -59,8 +59,8 @@ export default function App() {
 ## PDF Annotator
 
 ```jsx
-import { PdfAnnotator } from 'react-pdf-viewer-plus'
-import 'react-pdf-viewer-plus/style'
+import { PdfAnnotator } from 'pdfjs-annotation-extension-for-react'
+import 'pdfjs-annotation-extension-for-react/style'
 
 export default function App() {
   return (
