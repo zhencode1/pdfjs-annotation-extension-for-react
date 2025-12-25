@@ -15,6 +15,7 @@
 [![Demo](https://img.shields.io/badge/🔥_Live_Demo-React_PDF_Viewer_Plus-FF6F61?style=for-the-badge&logo=github&logoColor=white)](https://laomai-codefee.github.io/pdfjs-annotation-extension-for-react-demo/)
 
 ## ✨ Features
+
 - ✍️ Rich annotation system
   - Highlight, drawing, shapes, text notes
   - Signatures (draw / enter / upload)
@@ -34,13 +35,14 @@
   - Clean context & extension architecture
 
 ## ✍️ Annotation Tools
+
 1. Rectangle
 2. Circle
 3. Free Hand (grouped if drawn within a short time)
 4. Free Highlight (with auto-correction)
 5. Arrow
 6. Cloud
-7. FreeText 
+7. FreeText
 8. Signature
 9. Stamp (upload custom images)
 10. Text Highlight
@@ -49,6 +51,7 @@
 13. Text
 
 ## ✍️ Editing existing annotations in PDF files
+
 1. Square
 2. Circle
 3. Ink
@@ -72,6 +75,7 @@ yarn add pdfjs-annotation-extension-for-react
 # 🚀 Quick Start
 
 ## 1. PDF Annotator
+
 ```jsx
 import { PdfAnnotator } from 'pdfjs-annotation-extension-for-react'
 import 'pdfjs-annotation-extension-for-react/style'
@@ -107,27 +111,40 @@ export default function App() {
 }
 ```
 
-
 # 🧩 Components
+
+### Base Props
+
+| Name                   | Type                    | Default                                 | Description                                            |
+| ---------------------- | ----------------------- | --------------------------------------- | ------------------------------------------------------ |
+| `theme`              | Radix Theme Color       | `violet`                              | Theme color of the viewer UI                           |
+| `title`              | `React.ReactNode`     | —                                      | Page title content; accepts text or custom React nodes |
+| `url *`              | `string \| URL`        | —                                      | PDF file URL; supports string URLs or `URL` objects  |
+| `locale`             | `'zh-CN' \| 'en-US'`   | `zh-CN`                               | Locale used for internationalization                   |
+| `initialScale`       | `PdfScale`            | `auto`                                | Initial zoom level of the PDF viewer                   |
+| `layoutStyle`        | `React.CSSProperties` | `{ width: '100vw', height: '100vh' }` | Styles applied to the PDF viewer container             |
+| `isSidebarCollapsed` | `boolean`             | `false`                               | Whether the sidebar is collapsed by default            |
+| `enableRange`        | `boolean \| 'auto'`    | `auto`                                | Enables HTTP Range (streaming) loading for PDFs        |
+
 ## ✍️ PdfAnnotator
 
 An advanced PDF viewer with annotation capabilities.
 
 ### Props
 
-| Prop                      | Type                            | Default                           | Description                 |
-| ------------------------- | ------------------------------- | --------------------------------- | --------------------------- |
-| `user`                    | `{ id: string; name: string }`  | `{ id: 'null', name: 'unknown' }` | Annotation author           |
-| `enableNativeAnnotations` | `boolean`                       | `false`                           | Load native PDF annotations |
-| `initialAnnotations`      | `IAnnotationStore[]`            | `[]`                              | Existing annotations        |
-| `defaultOptions`          | `DeepPartial`                   | -                                 | Default annotator options   |
-| `onSave`                  | `(annotations) => void`         | -                                 | Save callback               |
-| `onLoad`                  | `() => void`                    | -                                 | Load complete               |
-| `onAnnotationAdded`       | `(annotation) => void`          | -                                 | Add callback                |
-| `onAnnotationDeleted`     | `(id) => void`                  | -                                 | Delete callback             |
-| `onAnnotationUpdated`     | `(annotation) => void`          | -                                 | Update callback             |
-| `onAnnotationSelected`    | `(annotation, isClick) => void` | -                                 | Select callback             |
-| `actions`                 | `ReactNode | Component`         | -                                 | Custom action buttons       |
+| Name                        | Type                                                                | Default                             | Description                                                          |
+| --------------------------- | ------------------------------------------------------------------- | ----------------------------------- | -------------------------------------------------------------------- |
+| `user`                    | `User`                                                            | `{ id: 'null', name: 'unknown' }` | Current user information<br />used to identify the annotation author |
+| `enableNativeAnnotations` | `boolean`                                                         | `false`                           | Native annotations embedded in the PDF file                          |
+| `defaultOptions`          | `DeepPartial`                                                     | —                                  | Default configuration for the annotator;                             |
+| `initialAnnotations`      | `IAnnotationStore[]`                                              | —                                  | Existing annotations to be rendered during initialization            |
+| `actions`                 | `React.ReactNode \| React.ComponentType`                           | —                                  | Custom actions area                                                 |
+| `onSave`                  | `(annotations: IAnnotationStore[]) => void`                       | —                                  | Callback triggered when annotations are saved                        |
+| `onLoad`                  | `() => void`                                                      | —                                  | Callback triggered when the PDF and annotator are fully loaded       |
+| `onAnnotationAdded`       | `(annotation: IAnnotationStore) => void`                          | —                                  | Fired when a new annotation is created                               |
+| `onAnnotationDeleted`     | `(id: string) => void`                                            | —                                  | Fired when an annotation is deleted                                  |
+| `onAnnotationSelected`    | `(annotation: IAnnotationStore \| null, isClick: boolean) => void` | —                                  | Fired when an annotation is selected or deselected                   |
+| `onAnnotationUpdated`     | `(annotation: IAnnotationStore) => void`                          | —                                  | Fired when an existing annotation is modified                        |
 
 ### ⚙️ defaultOptions (Enterprise Design)
 
@@ -245,29 +262,21 @@ import qiantubifengshouxietiFont from './fonts/qiantubifengshouxieti.ttf';
 />
 ```
 
-
 ## 📄 PdfViewer
 
 A lightweight PDF viewer with toolbar, sidebar, actions and extensible UI slots.
 
 ### Props
 
-| Prop                 | Type                             | Default                               | Description             |
-| -------------------- | -------------------------------- | ------------------------------------- | ----------------------- |
-| `theme`              | Radix Theme Color                | `'violet'`                            | Viewer theme color      |
-| `title`              | `ReactNode`                      | -                                     | Page title              |
-| `url`                | `string | URL`                   | **required**                          | PDF file URL            |
-| `locale`             | `'zh-CN' | 'en-US'`              | `'zh-CN'`                             | UI language             |
-| `initialScale`       | `PdfScale`                       | `'auto'`                              | Initial zoom            |
-| `layoutStyle`        | `CSSProperties`                  | `{ width: '100vw', height: '100vh' }` | Container style         |
-| `isSidebarCollapsed` | `boolean`                        | `true`                                | Sidebar collapsed state |
-| `showSidebarTrigger` | `boolean`                        | `false`                               | Show sidebar toggle     |
-| `showTextLayer`      | `boolean`                        | `true`                                | Enable text selection   |
-| `actions`            | `ReactNode | (ctx) => ReactNode` | -                                     | Custom action area      |
-| `sidebar`            | `ReactNode | (ctx) => ReactNode` | -                                     | Custom sidebar          |
-| `toolbar`            | `ReactNode | (ctx) => ReactNode` | ZoomTool                              | Custom toolbar          |
-| `onDocumentLoaded`   | `(pdfViewer) => void`            | -                                     | PDF loaded callback     |
-| `onEventBusReady`    | `(eventBus) => void`             | -                                     | PDF.js EventBus ready   |
+| Name                   | Type                                                                      | Default   | Description                                                                                |
+| ---------------------- | ------------------------------------------------------------------------- | --------- | ------------------------------------------------------------------------------------------ |
+| `actions`            | `React.ReactNode \| (context: PdfViewerContextValue) => React.ReactNode` | —        | Custom actions area in the toolbar                                                         |
+| `sidebar`            | `React.ReactNode \| (context: PdfViewerContextValue) => React.ReactNode` | —        | Custom sidebar component                                                                   |
+| `toolbar`            | `React.ReactNode \| (context: PdfViewerContextValue) => React.ReactNode` | —        | Custom toolbar component                                                                   |
+| `showSidebarTrigger` | `boolean`                                                               | `false` | Whether to display a button to toggle the sidebar visibility                               |
+| `showTextLayer`      | `boolean`                                                               | `true`  | Whether to render the text layer                                                           |
+| `onDocumentLoaded`   | `(pdfViewer: PDFViewer \| null) => void`                                 | —        | Callback invoked when the PDF <br />document is fully loaded and the viewer is initialized |
+| `onEventBusReady`    | `(eventBus: EventBus \| null) => void`                                   | —        | Callback invoked when the pdf.js EventBus is ready                                         |
 
 ### 🎨 Custom UI
 
@@ -357,7 +366,6 @@ A lightweight PDF viewer with toolbar, sidebar, actions and extensible UI slots.
 
 ---
 
-
 # 🌍 Browser Support
 
 - Chrome (latest)
@@ -368,4 +376,3 @@ A lightweight PDF viewer with toolbar, sidebar, actions and extensible UI slots.
 # 📄 License
 
 MIT
-
