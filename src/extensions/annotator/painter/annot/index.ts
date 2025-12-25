@@ -1,6 +1,5 @@
 import { PDFDocument, PDFName, PDFPage } from 'pdf-lib'
 import { TextParser } from './parse_text'
-import ExcelJS from 'exceljs'
 import { saveAs } from 'file-saver'
 import { AnnotationParser } from './parse'
 import { HighlightParser } from './parse_highlight'
@@ -168,6 +167,9 @@ async function exportAnnotationsToExcel(_PDFViewerApplication: PDFViewer, annota
         })
         mainIndex++
     })
+
+    const ExcelJS = await import('exceljs');
+
 
     // 创建 workbook 和 sheet
     const workbook = new ExcelJS.Workbook()
