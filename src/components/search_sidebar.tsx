@@ -211,10 +211,13 @@ export const SearchSidebar: React.FC<SearchSidebarProps> = ({ pdfViewer }) => {
 
     useEffect(() => {
         return () => {
+            if (results.length > 0) {
+                clearSearch()
+            }
             setCurrentMatch(null)
             setQuery('')
         }
-    }, [clearSearch])
+    }, [clearSearch, results])
 
     // 渲染搜索结果
     const renderSearchResults = useCallback(() => {
