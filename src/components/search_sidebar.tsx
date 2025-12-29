@@ -32,6 +32,8 @@ export const SearchSidebar: React.FC<SearchSidebarProps> = ({ pdfViewer }) => {
 
     const matchRefs = useRef<Record<string, HTMLButtonElement | null>>({})
 
+    const prevResultsRef = useRef(results);
+
     const HighlightedText: React.FC<{
         text: string
         query: string
@@ -204,6 +206,10 @@ export const SearchSidebar: React.FC<SearchSidebarProps> = ({ pdfViewer }) => {
     }, [results, currentMatch, getAllMatches, findCurrentMatchIndex, jumpToMatch])
 
     useEffect(() => {
+        prevResultsRef.current = results;
+    }, [results]);
+
+    useEffect(() => {
         if (query.trim()) {
             performSearch(query.trim())
         }
@@ -211,13 +217,13 @@ export const SearchSidebar: React.FC<SearchSidebarProps> = ({ pdfViewer }) => {
 
     useEffect(() => {
         return () => {
-            if (results.length > 0) {
+            if (prevResultsRef.current.length > 0) {
                 clearSearch()
             }
             setCurrentMatch(null)
             setQuery('')
         }
-    }, [clearSearch, results])
+    }, [clearSearch])
 
     // 渲染搜索结果
     const renderSearchResults = useCallback(() => {
