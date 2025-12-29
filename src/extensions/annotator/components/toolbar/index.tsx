@@ -75,6 +75,16 @@ export const Toolbar: React.FC<ToolbarProps> = ({ defaultAnnotationName, stamps,
         )
     )
 
+    useEffect(() => {
+        return () => {
+            // 重置激活类型
+            lastActivatedType.current = null
+            // 重置 store 中的当前注释类型
+            setCurrentAnnotationType(null)
+            safeActivate(null, null)
+        }
+    }, [])
+
     /**
      * 初始化 defaultAnnotation
      */

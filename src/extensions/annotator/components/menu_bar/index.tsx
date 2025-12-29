@@ -33,7 +33,7 @@ function getKonvaShapeForString(konvaString: string) {
  */
 const MenuBar = forwardRef<MenuBarRef, MenuBarProps>(function MenuBar(props, ref) {
     const { t } = useTranslation(['common', 'annotator'], { useSuspense: false })
-    const { setSidebarCollapsed, isSidebarCollapsed } = usePdfViewerContext()
+    const { openSidebar, activeSidebarPanel } = usePdfViewerContext()
 
     const { painter } = usePainter()
     const { defaultOptions } = useOptionsContext()
@@ -114,7 +114,7 @@ const MenuBar = forwardRef<MenuBarRef, MenuBarProps>(function MenuBar(props, ref
     }
 
     const handleOpenComment = (annotation: IAnnotationStore) => {
-        setSidebarCollapsed(false)
+        openSidebar('annotator-sidebar-toggle')
         useAnnotationStore.getState().setSelectedAnnotation(null)
         setTimeout(() => {
             useAnnotationStore.getState().setSelectedAnnotation(annotation, SelectionSource.CANVAS)
@@ -127,7 +127,7 @@ const MenuBar = forwardRef<MenuBarRef, MenuBarProps>(function MenuBar(props, ref
             renderButtons={() => {
                 if (currentAnnotation) {
                     return [
-                        ...(isSidebarCollapsed
+                        ...(activeSidebarPanel !== 'annotator-sidebar-toggle'
                             ? [
                                   {
                                       key: 'comment',

@@ -158,6 +158,7 @@ export const AnnotatorExtension: React.FC<AnnotatorExtensionProps> = ({
         }
 
         return () => {
+            painterInstance.destroy()
             eventBus.off('pagerendered', handlePageRendered);
             eventBus.off('updateviewarea', handleViewAreaChanged)
             eventBus.off('documentloaded', handleDocumentLoaded);

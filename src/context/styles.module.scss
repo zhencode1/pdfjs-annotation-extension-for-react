@@ -111,6 +111,15 @@
         }
     }
 
+    :global(.highlight) {
+        background-color: rgb(255, 255, 0) !important;
+        opacity: 0.5;
+    }
+
+    :global(.highlight.selected) {
+        background: var(--accent-9) !important;
+    }
+
     // SCROLLBAR
     &::-webkit-scrollbar {
         width: 8px;

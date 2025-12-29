@@ -11,7 +11,7 @@ const PdfAnnotatorCustom: React.FC = () => {
                 enableRange={false}
                 title={<strong>PDF ANNOTATOR FULL</strong>}
                 url={pdfUrl}
-                isSidebarCollapsed={false}
+                defaultShowAnnotationsSidebar={true}
                 user={{
                     id: '9527',
                     name: 'Lao Mai'

@@ -1,6 +1,7 @@
 import React from 'react';
 import { PdfViewer } from '../features/viewer';
 import { PDFPageView } from 'pdfjs-dist/types/web/pdf_page_view';
+import { BsLayoutTextSidebar } from 'react-icons/bs';
 
 const PdfViewerCustom: React.FC = () => {
     const pdfUrl = './compressed.tracemonkey-pldi-09.pdf';
@@ -12,7 +13,7 @@ const PdfViewerCustom: React.FC = () => {
                 url={pdfUrl}
                 layoutStyle={{ width: '100vw', height: '96vh' }}
                 locale='en-US'
-                showTextLayer={false}
+                defaultActiveSidebarKey="sidebar-1"
                 actions={(context) => (
                     <>
                         <button onClick={() => console.log(context.pdfViewer)}>
@@ -21,42 +22,64 @@ const PdfViewerCustom: React.FC = () => {
                         <button onClick={context.toggleSidebar}>
                             Toggle Sidebar
                         </button>
-                        <button onClick={() => context.setSidebarCollapsed(false)}>
-                            Open Sidebar
+                        <button onClick={() => context.openSidebar('sidebar-1')}>
+                            Open Sidebar1
                         </button>
-                        <button onClick={() => context.setSidebarCollapsed(true)}>
+                        <button onClick={() => context.closeSidebar()}>
                             Close Sidebar
                         </button>
 
                     </>
                 )}
-                sidebar={(context) => (
-                    <div style={{display:'flex', gap: 10, flexDirection: 'column'}}>
-                        <button onClick={() => console.log(context.pdfViewer)}>
-                            Get PDF Viewer
-                        </button>
-                        <button onClick={() => {
-                            context.pdfViewer?.scrollPageIntoView({
-                                pageNumber: 1
-                            })
-                        }}>
-                            goto page1
-                        </button>
-                        <button onClick={() => {
-                            context.pdfViewer?.scrollPageIntoView({
-                                pageNumber: 10
-                            })
-                        }}>
-                            goto page 10
-                        </button>
-                    </div>
-                )}
+                
+                sidebar={[{
+                    key: 'sidebar-1',
+                    title: 'Sidebar 1',
+                    icon: <BsLayoutTextSidebar />,
+                    render: (context) => (
+                        <div style={{ display: 'flex', gap: 10, flexDirection: 'column' }}>
+                            Sidebar 1
+                            <button onClick={context.toggleSidebar}>
+                                toggleSidebar
+                            </button>
+                            <button onClick={() => console.log(context.pdfViewer)}>
+                                Get PDF Viewer
+                            </button>
+                            <button onClick={() => {
+                                context.pdfViewer?.scrollPageIntoView({
+                                    pageNumber: 1
+                                })
+                            }}>
+                                goto page1
+                            </button>
+                            <button onClick={() => {
+                                context.pdfViewer?.scrollPageIntoView({
+                                    pageNumber: 10
+                                })
+                            }}>
+                                goto page 10
+                            </button>
+                        </div>
+                    )
+                },
+                {
+                    key: 'sidebar-2',
+                    title: 'Sidebar 2',
+                    icon: <>sidebar 2</>,
+                    render: () => (
+                        <div style={{ display: 'flex', gap: 10, flexDirection: 'column' }}>
+                            Sidebar 2
+                        </div>
+                    )
+                }]}
                 toolbar={(context) => (
-                    <div style={{display:'flex', gap: 10}}>
+                    <div style={{ display: 'flex', gap: 10 }}>
                         <button onClick={() => console.log(context.pdfViewer)}>
                             Get PDF Viewer
                         </button>
-                        <button onClick={context.toggleSidebar}>
+                        <button onClick={() => {
+                            context.toggleSidebar()
+                        }}>
                             Toggle Sidebar
                         </button>
                         <button onClick={() => {
@@ -75,8 +98,6 @@ const PdfViewerCustom: React.FC = () => {
                         </button>
                     </div>
                 )}
-                isSidebarCollapsed={false}
-                showSidebarTrigger={true}
                 onEventBusReady={(eventBus) => {
                     console.log("eventBus", eventBus)
                     eventBus?.on("pagerendered", ({ source, pageNumber, cssTransform }: { source: PDFPageView, pageNumber: number, cssTransform: boolean }) => {

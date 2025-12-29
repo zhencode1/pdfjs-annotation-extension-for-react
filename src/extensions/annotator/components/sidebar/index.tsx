@@ -111,6 +111,7 @@ const Sidebar: React.FC = () => {
     const { painter } = usePainter()
     const currentAnnotation = useAnnotationStore((state) => state.selectedAnnotation)
     const setCurrentAnnotation = useAnnotationStore((state) => state.setSelectedAnnotation)
+    const clearSelectedAnnotation = useAnnotationStore((state) => state.clearSelectedAnnotation)
     const [replyAnnotation, setReplyAnnotation] = useState<IAnnotationStore | null>(null)
     const [currentReply, setCurrentReply] = useState<IAnnotationComment | null>(null)
     const [editAnnotation, setEditAnnotation] = useState<IAnnotationStore | null>(null)
@@ -159,6 +160,15 @@ const Sidebar: React.FC = () => {
     useEffect(() => {
         setSelectedTypes(allTypes.map(([t]) => t))
     }, [allTypes])
+
+    useEffect(() => {
+        return () => {
+            setReplyAnnotation(null);
+            setCurrentReply(null);
+            setEditAnnotation(null);
+            clearSelectedAnnotation()
+        }
+    }, [])
 
     const filteredAnnotations = useMemo(() => {
         if (selectedUsers.length === 0 || selectedTypes.length === 0) return []

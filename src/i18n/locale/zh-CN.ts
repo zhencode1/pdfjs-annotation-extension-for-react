@@ -45,6 +45,15 @@ export default {
         },
         sidebar: {
             toggle: '切换侧边栏'
+        },
+        search: {
+            search: '搜索',
+            placeholder: '搜索文档...',
+            searching: '搜索中...',
+            page: '第 {{value}} 页',
+            resultTotal: '共找到{{total}}条结果', 
+            caseSensitive: '区分大小写',
+            entireWord: '完整单词',
         }
     },
 

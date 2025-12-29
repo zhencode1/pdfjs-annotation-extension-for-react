@@ -1,20 +1,18 @@
 import '@radix-ui/themes/styles.css'
 
 import React, { useEffect, useMemo } from 'react'
-import { PdfViewerProvider } from '../../context/pdf_viewer_provider'
+import { PdfViewerProvider, SidebarPanel, SidebarPanelKey } from '../../context/pdf_viewer_provider'
 import i18n from '@/i18n'
 import { PdfBaseProps } from '@/types'
 import { ZoomTool } from '@/components/zoom_tool'
 import { Flex, Separator, Theme } from '@radix-ui/themes'
-import { usePdfViewerContext } from '@/context/pdf_viewer_context'
+import { PdfViewerContextValue, usePdfViewerContext } from '@/context/pdf_viewer_context'
 import { ViewerExtension } from '@/extensions/viewer'
 import { EventBus, PDFViewer } from 'pdfjs-dist/types/web/pdf_viewer'
+import { SearchSidebar } from '@/components/search_sidebar'
+import { AiOutlineSearch } from 'react-icons/ai'
+import { useTranslation } from 'react-i18next'
 
-export interface PdfViewerContextValue {
-    pdfViewer: PDFViewer | null
-    setSidebarCollapsed: (collapsed: boolean) => void
-    toggleSidebar: () => void
-}
 
 export interface PdfViewerProps extends PdfBaseProps {
     /**
@@ -25,9 +23,8 @@ export interface PdfViewerProps extends PdfBaseProps {
 
     /**
      * 自定义侧边栏组件
-     * 可以是一个 React 组件或者 React 元素
      */
-    sidebar?: React.ReactNode | ((context: PdfViewerContextValue) => React.ReactNode)
+    sidebar?: SidebarPanel[]
 
     /**
      * 自定义工具栏组件
@@ -37,16 +34,15 @@ export interface PdfViewerProps extends PdfBaseProps {
     toolbar?: React.ReactNode | ((context: PdfViewerContextValue) => React.ReactNode)
 
     /**
-     * 是否显示侧边栏触发按钮
-     * @default false
-     */
-    showSidebarTrigger?: boolean
-
-    /**
      * 是否显示文本层（用于选择和搜索文本）
      * @default true
      */
     showTextLayer?: boolean
+
+    /**
+     * 默认选中的侧边栏项 key
+     */
+    defaultActiveSidebarKey?: SidebarPanelKey | null
 
     /**
      * 文档加载完成回调
@@ -75,20 +71,6 @@ const ActionsRenderer: React.FC<{ actions?: PdfViewerProps['actions'] }> = ({ ac
     }
 
     return actions
-}
-
-const SideBarRenderer: React.FC<{ sidebar?: PdfViewerProps['sidebar'] }> = ({ sidebar }) => {
-    const context = usePdfViewerContext()
-
-    if (!sidebar) {
-        return null
-    }
-
-    if (typeof sidebar === 'function') {
-        return sidebar(context)
-    }
-
-    return sidebar
 }
 
 const ToolBarRenderer: React.FC<{ toolbar?: PdfViewerProps['toolbar'] }> = ({ toolbar }) => {
@@ -126,12 +108,13 @@ export const PdfViewer: React.FC<PdfViewerProps> = ({
     actions,
     sidebar,
     toolbar,
-    isSidebarCollapsed = true,
-    showSidebarTrigger = false,
     showTextLayer = true,
+    defaultActiveSidebarKey,
     onDocumentLoaded,
     onEventBusReady
 }) => {
+    const { t } = useTranslation(['viewer'], { useSuspense: false })
+    
     const viewerOptions = useMemo(
         () => ({
             textLayerMode: showTextLayer ? 1 : 0,
@@ -150,12 +133,16 @@ export const PdfViewer: React.FC<PdfViewerProps> = ({
         <Theme accentColor={theme}>
             <PdfViewerProvider
                 title={title}
-                isSidebarCollapsed={isSidebarCollapsed}
                 url={url}
-                sidebar={<SideBarRenderer sidebar={sidebar} />}
+                sidebar={[{
+                    key: 'search-sidebar',
+                    title: t('viewer:search.search'),
+                    icon: <AiOutlineSearch style={{width: 18, height: 18}} />,
+                    render: (context) => <SearchSidebar pdfViewer={context.pdfViewer} />
+                }, ...(sidebar || [])]}
+                defaultActiveSidebarKey={defaultActiveSidebarKey}
                 toolbar={<ToolBarRenderer toolbar={toolbar} />}
                 initialScale={initialScale}
-                {...(showSidebarTrigger ? {} : { sidebarTrigger: true })}
                 {...viewerOptions}
                 style={layoutStyle}
                 actions={<ActionsRenderer actions={actions} />}

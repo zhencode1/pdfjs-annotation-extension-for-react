@@ -845,5 +845,41 @@ export class Painter {
     public reRenderAnnotations(pageNumber: number) {
         this.reDrawAnnotation(pageNumber)
     }
-}
 
+    /**
+     * 销毁 Painter 实例，清理所有资源
+     */
+    public destroy(): void {
+
+        this.disablePainting()
+
+        // 移除全局事件监听器
+        window.removeEventListener('keyup', this.globalKeyUpHandler)
+
+        // 销毁所有 Konva Stage 和清理画布
+        this.konvaCanvasStore.forEach((konvaCanvas) => {
+            konvaCanvas.konvaStage.destroy()
+        })
+        this.konvaCanvasStore.clear()
+
+        
+        this.editorStore.clear()
+
+        // 销毁选择器
+        this.selector.delete()
+
+        // 清理临时数据
+        this.clearTempDataTransfer()
+
+        // 重置状态
+        this.currentAnnotation = null
+
+        // 清理 CSS 样式
+        document.body.classList.remove(`${PAINTER_IS_PAINTING_STYLE}`)
+        const allAnnotationClasses = Object.values(AnnotationType)
+            .filter((type) => typeof type === 'number')
+            .map((type) => `${PAINTER_PAINTING_TYPE}_${type}`)
+        allAnnotationClasses.forEach((cls) => document.body.classList.remove(cls))
+        removeCssCustomProperty(CURSOR_CSS_PROPERTY)
+    }
+}

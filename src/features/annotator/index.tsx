@@ -2,7 +2,6 @@ import '@radix-ui/themes/styles.css'
 import React, { useEffect, useMemo, useState } from 'react'
 import { PdfViewerProvider } from '../../context/pdf_viewer_provider'
 import { AnnotatorExtension } from '../../extensions/annotator'
-import { SidebarToggle } from '@/components/sidebar_toggle'
 import { useTranslation } from 'react-i18next'
 import i18n from '@/i18n'
 import { Toolbar } from '@/extensions/annotator/components/toolbar'
@@ -16,7 +15,8 @@ import { exportAnnotationsToExcel, exportAnnotationsToPdf } from '@/extensions/a
 import { usePdfViewerContext } from '@/context/pdf_viewer_context'
 import { Button, DropdownMenu, Separator, Theme } from '@radix-ui/themes'
 import { AnnoIcon } from '@/extensions/annotator/const/icons'
-import { AiOutlineSave } from 'react-icons/ai'
+import { AiOutlineSave, AiOutlineSearch } from 'react-icons/ai'
+import { SearchSidebar } from '@/components/search_sidebar'
 
 export const PdfAnnotator: React.FC<PdfAnnotatorProps> = ({
     enableRange = 'auto',
@@ -27,9 +27,9 @@ export const PdfAnnotator: React.FC<PdfAnnotatorProps> = ({
     user = { id: 'null', name: 'unknown' },
     defaultOptions,
     initialScale,
-    isSidebarCollapsed = false,
     enableNativeAnnotations = false,
     initialAnnotations = [],
+    defaultShowAnnotationsSidebar = false,
     onSave,
     onLoad,
     onAnnotationAdded,
@@ -62,10 +62,6 @@ export const PdfAnnotator: React.FC<PdfAnnotatorProps> = ({
     useEffect(() => {
         i18n.changeLanguage(locale)
     }, [locale])
-
-    const SidebarTrigger: React.FC = () => {
-        return <SidebarToggle title={t('annotator:sidebar.toggle')} icon={<AnnoIcon style={{ width: 18, height: 18 }} />} />
-    }
 
     const ActionsButtons: React.FC = () => {
         const { painter } = usePainter()
@@ -153,14 +149,26 @@ export const PdfAnnotator: React.FC<PdfAnnotatorProps> = ({
                 >
                     <PdfViewerProvider
                         title={title}
-                        isSidebarCollapsed={isSidebarCollapsed}
                         url={url}
                         initialScale={initialScale}
                         user={user}
                         {...viewerOptions}
                         toolbar={<Toolbar defaultAnnotationName="" />}
-                        sidebar={<Sidebar />}
-                        sidebarTrigger={<SidebarTrigger />}
+                        defaultActiveSidebarKey={defaultShowAnnotationsSidebar ? 'annotator-sidebar-toggle' : null}
+                        sidebar={[
+                            {
+                                key: 'search-sidebar',
+                                title: t('viewer:search.search'),
+                                icon: <AiOutlineSearch style={{width: 18, height: 18}} />,
+                                render: (context) => <SearchSidebar pdfViewer={context.pdfViewer} />
+                            },
+                            {
+                                title: t('annotator:sidebar.toggle'),
+                                key: 'annotator-sidebar-toggle',
+                                icon: <AnnoIcon style={{ width: 18, height: 18 }} />,
+                                render: () => <Sidebar />
+                            }
+                        ]}
                         actions={<ActionsButtons />}
                         style={layoutStyle}
                     >

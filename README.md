@@ -136,6 +136,7 @@ An advanced PDF viewer with annotation capabilities.
 | --------------------------- | ------------------------------------------------------------------- | ----------------------------------- | -------------------------------------------------------------------- |
 | `user`                    | `User`                                                            | `{ id: 'null', name: 'unknown' }` | Current user information<br />used to identify the annotation author |
 | `enableNativeAnnotations` | `boolean`                                                         | `false`                           | Native annotations embedded in the PDF file                          |
+| `defaultShowAnnotationsSidebar` | `boolean`                                                   | `false`                           | Show Annotations Sidebar                                             |
 | `defaultOptions`          | `DeepPartial`                                                     | —                                  | Default configuration for the annotator;                             |
 | `initialAnnotations`      | `IAnnotationStore[]`                                              | —                                  | Existing annotations to be rendered during initialization            |
 | `actions`                 | `React.ReactNode \| React.ComponentType`                           | —                                  | Custom actions area                                                 |
@@ -271,10 +272,10 @@ A lightweight PDF viewer with toolbar, sidebar, actions and extensible UI slots.
 | Name                   | Type                                                                      | Default   | Description                                                                                |
 | ---------------------- | ------------------------------------------------------------------------- | --------- | ------------------------------------------------------------------------------------------ |
 | `actions`            | `React.ReactNode \| (context: PdfViewerContextValue) => React.ReactNode` | —        | Custom actions area in the toolbar                                                         |
-| `sidebar`            | `React.ReactNode \| (context: PdfViewerContextValue) => React.ReactNode` | —        | Custom sidebar component                                                                   |
+| `sidebar`            | `SidebarPanel[]` | —        | Custom sidebar component                                                                   |
 | `toolbar`            | `React.ReactNode \| (context: PdfViewerContextValue) => React.ReactNode` | —        | Custom toolbar component                                                                   |
-| `showSidebarTrigger` | `boolean`                                                               | `false` | Whether to display a button to toggle the sidebar visibility                               |
 | `showTextLayer`      | `boolean`                                                               | `true`  | Whether to render the text layer                                                           |
+| `defaultActiveSidebarKey`      | `string`                                                     | null  | Default Active Sidebar Key                                                       |
 | `onDocumentLoaded`   | `(pdfViewer: PDFViewer \| null) => void`                                 | —        | Callback invoked when the PDF <br />document is fully loaded and the viewer is initialized |
 | `onEventBusReady`    | `(eventBus: EventBus \| null) => void`                                   | —        | Callback invoked when the pdf.js EventBus is ready                                         |
 
@@ -309,34 +310,36 @@ A lightweight PDF viewer with toolbar, sidebar, actions and extensible UI slots.
 ```jsx
 <PdfViewer
   url={pdfUrl}
-  sidebar={(context) => (
-    <>
-    <button onClick={() => console.log(context.pdfViewer)}>
-        PDF Viewer
-    </button>
-    <button onClick={() => {
-        context.pdfViewer?.scrollPageIntoView({
-            pageNumber: 1
-        })
-    }}>
-        page1
-    </button>
-    <button onClick={() => {
-        context.pdfViewer?.scrollPageIntoView({
-            pageNumber: 10
-        })
-    }}>
-        page 10
-    </button>
-    <button onClick={() => {
-        context.pdfViewer?.scrollPageIntoView({
-            pageNumber: 100
-        })
-    }}>
-        page 100
-    </button>
-</>
-  )}
+   sidebar={[{
+            key: 'sidebar-1',
+            title: 'Sidebar 1',
+            icon: <BsLayoutTextSidebar />,
+            render: (context) => (
+                <div style={{ display: 'flex', gap: 10, flexDirection: 'column' }}>
+                    Sidebar 1
+                    <button onClick={context.toggleSidebar}>
+                        toggleSidebar
+                    </button>
+                    <button onClick={() => console.log(context.pdfViewer)}>
+                        Get PDF Viewer
+                    </button>
+                    <button onClick={() => {
+                        context.pdfViewer?.scrollPageIntoView({
+                            pageNumber: 1
+                        })
+                    }}>
+                        goto page1
+                    </button>
+                    <button onClick={() => {
+                        context.pdfViewer?.scrollPageIntoView({
+                            pageNumber: 10
+                        })
+                    }}>
+                        goto page 10
+                    </button>
+                </div>
+            )
+        }]}
 />
 ```
 

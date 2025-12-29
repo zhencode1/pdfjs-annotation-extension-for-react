@@ -1,8 +1,27 @@
+export interface MatchSnippet {
+    matchIndex: number
+    charIndex: number
+    snippet: string
+}
+
+export interface PageMatch {
+    pageNumber: number
+    countTotal: number
+    matches: MatchSnippet[]
+}
+
+export interface KeywordResult {
+    query: string
+    countTotal: number
+    pageMatches: PageMatch[]
+}
+
 export interface User {
     id: string
     name: string
     avatarUrl?: string
 }
+
 
 export type PdfScale = 'auto' | 'page-actual' | 'page-fit' | 'page-width' | string
 
@@ -66,13 +85,9 @@ export interface PdfBaseProps {
     layoutStyle?: React.CSSProperties
 
     /**
-     * 控制侧边栏是否折叠
-     */
-    isSidebarCollapsed?: boolean
-
-    /**
      * 是否开启流式加载模式, auto 为自动判断
      * @default auto
      */
     enableRange?: boolean | 'auto'
+
 }

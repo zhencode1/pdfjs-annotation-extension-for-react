@@ -45,6 +45,15 @@ export default {
         },
         sidebar: {
             toggle: 'Toggle Sidebar'
+        },
+        search: {
+            search: 'Search',
+            placeholder: 'Search the docs…',
+            searching: 'Searching...',
+            page: 'Page {{value}}',
+            resultTotal: '{{total}} results found', 
+            caseSensitive: 'Case Sensitive',
+            entireWord: 'Entire Word',
         }
     },
 

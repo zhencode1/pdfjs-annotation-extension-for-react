@@ -218,6 +218,14 @@ export interface PdfAnnotatorProps extends PdfBaseProps {
      */
     initialAnnotations?: IAnnotationStore[]
 
+
+    /**
+     * 是否默认显示批注侧边栏
+     * @default false
+     */
+    defaultShowAnnotationsSidebar?: boolean
+
+
     /**
      * 自定义额外按钮区域组件
      * 可以是一个 React 组件或者 React 元素

@@ -17,28 +17,19 @@ const App = () => {
                 <Tabs.List>
                     <Tabs.Trigger value="PdfViewerBasic">PdfViewer Basic</Tabs.Trigger>
                     <Tabs.Trigger value="PdfViewerCustom">PdfViewer Custom</Tabs.Trigger>
-                    <Tabs.Trigger value="PdfAnnotatorBasic">PdfAnnotator Basic</Tabs.Trigger>                    
+                    <Tabs.Trigger value="PdfAnnotatorBasic">PdfAnnotator Basic</Tabs.Trigger>
                     <Tabs.Trigger value="PdfAnnotatorCustom">PdfAnnotator Custom</Tabs.Trigger>
                     <Tabs.Trigger value="PdfAnnotatorFull">PdfAnnotator Full</Tabs.Trigger>
                 </Tabs.List>
-                <Box pt="0">
-                    <Tabs.Content value="PdfViewerBasic">
-                        <PdfViewerBasic key={activeTab} />
-                    </Tabs.Content>
-                    <Tabs.Content value="PdfViewerCustom">
-                        <PdfViewerCustom  key={activeTab}/>
-                    </Tabs.Content>
-                    <Tabs.Content value="PdfAnnotatorBasic">
-                        <PdfAnnotatorBasic key={activeTab} />
-                    </Tabs.Content>
-                    <Tabs.Content value="PdfAnnotatorFull">
-                        <PdfAnnotatorFull key={activeTab} />
-                    </Tabs.Content>
-                    <Tabs.Content value="PdfAnnotatorCustom">
-                        <PdfAnnotatorCustom key={activeTab} />
-                    </Tabs.Content>
-                </Box>
+                
             </Tabs.Root>
+            <Box pt="0">
+    {activeTab === 'PdfViewerBasic' && <PdfViewerBasic />}
+    {activeTab === 'PdfViewerCustom' && <PdfViewerCustom />}
+    {activeTab === 'PdfAnnotatorBasic' && <PdfAnnotatorBasic />}
+    {activeTab === 'PdfAnnotatorCustom' && <PdfAnnotatorCustom />}
+    {activeTab === 'PdfAnnotatorFull' && <PdfAnnotatorFull />}
+</Box>
         </Theme>
     );
 };
