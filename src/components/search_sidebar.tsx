@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react'
 import { Box, TextField, Text, Spinner, Flex, Checkbox, Button, IconButton, Separator } from '@radix-ui/themes'
-import { AiFillCloseCircle, AiOutlineClear, AiOutlineDelete, AiOutlineLeft, AiOutlineRight, AiOutlineSearch } from 'react-icons/ai'
+import { AiFillCloseCircle, AiOutlineLeft, AiOutlineRight, AiOutlineSearch } from 'react-icons/ai'
 import { PDFViewer } from 'pdfjs-dist/types/web/pdf_viewer'
 import { usePdfSearch } from '@/hooks/usePdfSearch'
 import { useTranslation } from 'react-i18next'
