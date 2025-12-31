@@ -1,5 +1,5 @@
 import { AnnotationParser } from './parse'
-import { PDFName, PDFString } from 'pdf-lib'
+import { PDFName, PDFNumber, PDFString } from 'pdf-lib'
 import { convertKonvaRectToPdfRect, rgbToPdfColor, stringToPDFHexString } from '../../utils/utils'
 import { t } from 'i18next'
 export class StrikeOutParser extends AnnotationParser {
@@ -32,7 +32,8 @@ export class StrikeOutParser extends AnnotationParser {
             // 这里如果置空，写入的批注中就不会出现内容，和 highlight 不一致
             Contents: stringToPDFHexString(annotation.contentsObj?.text || ''),
             M: PDFString.of(annotation.date || ''),
-            NM: PDFString.of(annotation.id)
+            NM: PDFString.of(annotation.id),
+            F: PDFNumber.of(4),
         })
         const mainAnnRef = context.register(mainAnn)
         this.addAnnotationToPage(page, mainAnnRef)

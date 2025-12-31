@@ -1,5 +1,5 @@
 import { AnnotationParser } from './parse'
-import { PDFName, PDFString } from 'pdf-lib'
+import { PDFName, PDFNumber, PDFString } from 'pdf-lib'
 import { convertKonvaRectToPdfRect, rgbToPdfColor, stringToPDFHexString } from '../../utils/utils'
 import { t } from 'i18next'
 
@@ -19,6 +19,8 @@ export class SquareParser extends AnnotationParser {
             Contents: stringToPDFHexString(annotation.contentsObj?.text || ''), // 说明文字
             M: PDFString.of(annotation.date || ''),
             NM: PDFString.of(annotation.id), // 唯一标识
+            F: PDFNumber.of(4),
+            P: page.ref,
             Border: [0, 0, 1] // 可选：设置边框样式为实线宽度1
         })
         const mainAnnRef = context.register(mainAnn)

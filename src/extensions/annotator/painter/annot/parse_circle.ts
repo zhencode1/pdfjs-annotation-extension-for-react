@@ -1,5 +1,5 @@
 import { AnnotationParser } from './parse'
-import { PDFName, PDFString } from 'pdf-lib'
+import { PDFName, PDFNumber, PDFString } from 'pdf-lib'
 import { t } from 'i18next'
 import { convertKonvaRectToPdfRect, rgbToPdfColor, stringToPDFHexString } from '../../utils/utils'
 
@@ -19,6 +19,8 @@ export class CircleParser extends AnnotationParser {
             Contents: stringToPDFHexString(annotation.contentsObj?.text || ''),
             M: PDFString.of(annotation.date || ''),
             NM: PDFString.of(annotation.id),
+            F: PDFNumber.of(4),
+            P: page.ref,
             Border: [0, 0, 1] // 可选：1像素实线边框
         })
         const mainAnnRef = context.register(mainAnn)

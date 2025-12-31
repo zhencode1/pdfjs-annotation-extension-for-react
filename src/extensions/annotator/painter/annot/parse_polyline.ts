@@ -89,6 +89,8 @@ export class PolylineParser extends AnnotationParser {
             NM: PDFString.of(annotation.id),
             Border: context.obj([0, 0, 0]),
             BS: bs,
+            F: PDFNumber.of(4),
+            P: page.ref,
             CA: PDFNumber.of(opacity) // Non-stroking opacity (used for drawing)
         })
 

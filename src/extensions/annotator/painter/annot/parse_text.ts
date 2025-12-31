@@ -1,4 +1,4 @@
-import { PDFName, PDFString } from 'pdf-lib'
+import { PDFName, PDFNumber, PDFString } from 'pdf-lib'
 import { AnnotationParser } from './parse'
 import { convertKonvaRectToPdfRect, rgbToPdfColor, stringToPDFHexString } from '../../utils/utils'
 import { t } from 'i18next'
@@ -19,6 +19,8 @@ export class TextParser extends AnnotationParser {
             T: stringToPDFHexString(annotation.title || t('normal.unknownUser')),
             M: PDFString.of(annotation.date || ''),
             C: rgbToPdfColor(annotation.color || '#000000'),
+            F: PDFNumber.of(4),
+            P: page.ref,
             Open: false
         })
         const mainAnnRef = context.register(mainAnn)

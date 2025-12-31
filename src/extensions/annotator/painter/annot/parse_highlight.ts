@@ -1,5 +1,5 @@
 import { AnnotationParser } from './parse'
-import { PDFName, PDFString } from 'pdf-lib'
+import { PDFName, PDFNumber, PDFString } from 'pdf-lib'
 import { convertKonvaRectToPdfRect, rgbToPdfColor, stringToPDFHexString } from '../../utils/utils'
 import { t } from 'i18next'
 
@@ -39,6 +39,7 @@ export class HighlightParser extends AnnotationParser {
             Contents: stringToPDFHexString(annotation.contentsObj?.text || ''), // 主内容
             M: PDFString.of(annotation.date || ''), // 日期
             NM: PDFString.of(annotation.id), // 唯一标识
+            F: PDFNumber.of(4),
         })
         const mainAnnRef = context.register(mainAnn)
         this.addAnnotationToPage(page, mainAnnRef)
@@ -47,7 +48,7 @@ export class HighlightParser extends AnnotationParser {
             const replyAnn = context.obj({
                 Type: PDFName.of('Annot'),
                 Subtype: PDFName.of('Text'),
-                Rect: convertKonvaRectToPdfRect(annotation.konvaClientRect, pageHeight),
+                Rect: [0,0,0,0],
                 Contents: stringToPDFHexString(comment.content),
                 T: stringToPDFHexString(comment.title || t('normal.unknownUser')),
                 M: PDFString.of(comment.date || ''),
