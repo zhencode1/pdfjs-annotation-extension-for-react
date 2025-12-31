@@ -27,6 +27,7 @@ export default {
         transparent: '透明',
         fileSizeLimit: '文件大小超出 {{value}} 限制',
         comment: '评论',
+        print: '打印',
         dateFormat: {
             full: '{{year}}-{{month}}-{{day}} {{hour}}:{{minute}}',
             dayMonth: '{{month}}-{{day}}',

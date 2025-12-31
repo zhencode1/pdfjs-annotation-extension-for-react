@@ -12,6 +12,7 @@ import { EventBus, PDFViewer } from 'pdfjs-dist/types/web/pdf_viewer'
 import { SearchSidebar } from '@/components/search_sidebar'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { useTranslation } from 'react-i18next'
+import { PrintTool } from '@/components/print_tool'
 
 
 export interface PdfViewerProps extends PdfBaseProps {
@@ -63,7 +64,11 @@ const ActionsRenderer: React.FC<{ actions?: PdfViewerProps['actions'] }> = ({ ac
     const context = usePdfViewerContext()
 
     if (!actions) {
-        return null
+        return <>
+            <Flex gap="3" align="center">
+                <PrintTool />
+            </Flex>
+        </>
     }
 
     if (typeof actions === 'function') {

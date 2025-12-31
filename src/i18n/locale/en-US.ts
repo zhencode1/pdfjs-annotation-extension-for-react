@@ -27,6 +27,7 @@ export default {
         transparent: 'Transparent',
         comment: 'Comment',
         fileSizeLimit: 'The file size exceeds the {{value}} limit',
+        print: 'Print',
         dateFormat: {
             full: '{{month}}/{{day}}/{{year}} {{hour}}:{{minute}}',
             dayMonth: '{{month}}/{{day}}',

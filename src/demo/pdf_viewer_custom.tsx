@@ -16,7 +16,9 @@ const PdfViewerCustom: React.FC = () => {
                 defaultActiveSidebarKey="sidebar-1"
                 actions={(context) => (
                     <>
-                        <button onClick={() => console.log(context.pdfViewer)}>
+                        <button onClick={() => {
+                            console.log(context.pdfViewer)
+                        }}>
                             PDF Viewer
                         </button>
                         <button onClick={context.toggleSidebar}>
@@ -28,10 +30,19 @@ const PdfViewerCustom: React.FC = () => {
                         <button onClick={() => context.closeSidebar()}>
                             Close Sidebar
                         </button>
-
+                        <button onClick={() => {
+                            context.print()
+                        }}>
+                            Print
+                        </button>
+                        <button onClick={() => {
+                            context.download('test')
+                        }}>
+                            Download
+                        </button>
                     </>
                 )}
-                
+
                 sidebar={[{
                     key: 'sidebar-1',
                     title: 'Sidebar 1',
@@ -58,6 +69,16 @@ const PdfViewerCustom: React.FC = () => {
                                 })
                             }}>
                                 goto page 10
+                            </button>
+                            <button onClick={() => {
+                                context.print()
+                            }}>
+                                print
+                            </button>
+                            <button onClick={() => {
+                                context.download()
+                            }}>
+                                Download
                             </button>
                         </div>
                     )
@@ -95,6 +116,11 @@ const PdfViewerCustom: React.FC = () => {
                             })
                         }}>
                             goto page 10
+                        </button>
+                        <button onClick={() => {
+                            context.print()
+                        }}>
+                            print
                         </button>
                     </div>
                 )}

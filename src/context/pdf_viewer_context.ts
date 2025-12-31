@@ -27,6 +27,10 @@ export interface PdfViewerContextValue {
     closeSidebar: () => void
 
     isSidebarCollapsed: boolean
+
+    print: () => void
+
+    download: (fileName?: string) => void
 }
 
 // 创建 Context

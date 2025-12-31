@@ -9,6 +9,7 @@ import { Flex, Box, Tooltip, Button } from '@radix-ui/themes'
 import { LoadingIndicator } from '@/components/loading_indicator'
 import { ErrorDisplay } from '@/components/error_display'
 import { PageIndicator } from '@/components/page_indicator'
+import { usePdfTool } from '@/hooks/usePdfTool'
 
 export type SidebarPanelKey = string
 
@@ -84,6 +85,8 @@ export const PdfViewerProvider: React.FC<PdfViewerProviderProps> = ({
 
     const isReady = !!(pdfViewer && eventBus && viewerContainerRef.current && !loading)
 
+    const { printClean, downloadClean } = usePdfTool(pdfDocument);
+
     const contextValue = useMemo<PdfViewerContextValue>(
         () => ({
             pdfDocument,
@@ -95,7 +98,9 @@ export const PdfViewerProvider: React.FC<PdfViewerProviderProps> = ({
             toggleSidebar,
             openSidebar,
             closeSidebar,
-            isSidebarCollapsed: sidebarCollapsed
+            isSidebarCollapsed: sidebarCollapsed,
+            print: printClean,
+            download: downloadClean
         }),
         [
             pdfDocument,
@@ -110,7 +115,9 @@ export const PdfViewerProvider: React.FC<PdfViewerProviderProps> = ({
             sidebarCollapsed,
             openSidebar,
             closeSidebar,
-            activeSidebarPanel
+            activeSidebarPanel,
+            printClean,
+            downloadClean
         ]
     )
 
