@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.2.3] - 2026-01-02
+
+### Changed
+
+- Viewer add download and print support
+- Viewer add showAnnotations prop to control native annotation rendering
+- Resolve mismatch issue when exporting cloud annotations
+- Prevent arrow head from being lost during export
+- Adjust spacing and alignment of toolbar buttons
+
 ## [0.1.1] - 2025-12-17
 
 ### Changed
