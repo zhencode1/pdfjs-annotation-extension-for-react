@@ -508,7 +508,6 @@ const StampTool: React.FC<SignatureToolProps> = ({ annotation, default_stamps, o
             </Popover.Root>
 
             <Dialog.Root open={isModalOpen} onOpenChange={setIsModalOpen}>
-                <Dialog.Description></Dialog.Description>
                 <Dialog.Content style={{ width: '550px' }}>
                     <Dialog.Title>{t('annotator:common.createStamp')}</Dialog.Title>
                     <div className={styles.StampTool}>

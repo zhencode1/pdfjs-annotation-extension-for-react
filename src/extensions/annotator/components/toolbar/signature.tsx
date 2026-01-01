@@ -345,7 +345,6 @@ const SignatureTool: React.FC<SignatureToolProps> = ({ annotation, onAdd, defaul
                 </Popover.Content>
             </Popover.Root>
             <Dialog.Root open={isModalOpen} onOpenChange={setIsModalOpen}>
-                <Dialog.Description></Dialog.Description>
                 <Dialog.Content style={{ width: '550px' }}>
                     <Dialog.Title>{t('annotator:common.createSignature')}</Dialog.Title>
                     <Flex as="span" justify="center" mb="4">
